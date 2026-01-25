@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SaludPlus.MainPage"
+             BackgroundColor="#F0F2F5">
+
+	<ScrollView>
+		<VerticalStackLayout Padding="30" Spacing="25">
+
+			<HorizontalStackLayout HorizontalOptions="End" Spacing="8" Margin="0,0,10,0">
+				<Ellipse WidthRequest="12" HeightRequest="12" VerticalOptions="Center">
+					<Ellipse.Triggers>
+						<DataTrigger TargetType="Ellipse" Binding="{Binding IsConnected}" Value="True">
+							<Setter Property="Fill" Value="#27AE60" />
+						</DataTrigger>
+						<DataTrigger TargetType="Ellipse" Binding="{Binding IsConnected}" Value="False">
+							<Setter Property="Fill" Value="#BDC3C7" />
+						</DataTrigger>
+					</Ellipse.Triggers>
+				</Ellipse>
+				<Label Text="{Binding ConnectionText}" 
+                       FontSize="12" 
+                       TextColor="#7F8C8D" 
+                       FontAttributes="Italic" 
+                       VerticalOptions="Center"/>
+			</HorizontalStackLayout>
+
+			<Label Text="MONITOR DE SALUD" 
+                   FontSize="28" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   TextColor="#2C3E50" 
+                   Margin="0,0,0,10"/>
+
+			<Border StrokeShape="RoundRectangle 20" BackgroundColor="White" Padding="20" StrokeThickness="0">
+				<HorizontalStackLayout Spacing="20">
+					<Label Text="❤️" FontSize="45"/>
+					<VerticalStackLayout>
+						<Label Text="Ritmo Cardíaco" FontSize="14" TextColor="Gray"/>
+						<Label Text="{Binding HeartRate}" FontSize="35" FontAttributes="Bold" TextColor="#E74C3C"/>
+					</VerticalStackLayout>
+				</HorizontalStackLayout>
+			</Border>
+
+			<Border StrokeShape="RoundRectangle 20" BackgroundColor="White" Padding="20" StrokeThickness="0">
+				<HorizontalStackLayout Spacing="20">
+					<Label Text="🌡️" FontSize="45"/>
+					<VerticalStackLayout>
+						<Label Text="Temperatura" FontSize="14" TextColor="Gray"/>
+						<Label Text="{Binding Temperature}" FontSize="35" FontAttributes="Bold" TextColor="#3498DB"/>
+					</VerticalStackLayout>
+				</HorizontalStackLayout>
+			</Border>
+
+			<Border StrokeShape="RoundRectangle 20" BackgroundColor="White" Padding="20" StrokeThickness="0">
+				<Border.Shadow>
+					<Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.1"/>
+				</Border.Shadow>
+				<HorizontalStackLayout Spacing="20">
+					<Label Text="👟" FontSize="45" VerticalOptions="Center"/>
+					<VerticalStackLayout>
+						<Label Text="Pasos Totales" FontSize="14" TextColor="#7F8C8D"/>
+						<HorizontalStackLayout Spacing="5">
+							<Label Text="{Binding StepCount}" FontSize="35" FontAttributes="Bold" TextColor="#27AE60"/>
+							<Label Text="pasos" FontSize="16" VerticalOptions="End" Margin="0,0,0,8"/>
+						</HorizontalStackLayout>
+					</VerticalStackLayout>
+				</HorizontalStackLayout>
+			</Border>
+
+		</VerticalStackLayout>
+	</ScrollView>
+</ContentPage>
