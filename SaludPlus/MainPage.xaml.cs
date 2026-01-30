@@ -8,11 +8,6 @@ namespace SaludPlus
 		public MainPage()
 		{
 			InitializeComponent();
-
-			// Instanciamos el modelo desde la carpeta ViewModels
-			var vm = new MainPageModel();
-			BindingContext = vm;
-			vm.StartSimulation();
 		}
 	}
 }
