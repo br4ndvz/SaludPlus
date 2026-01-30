@@ -1,73 +1,168 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SaludPlus.MainPage"
-             BackgroundColor="#F0F2F5">
+             xmlns:vm="clr-namespace:SaludPlus.ViewModels"
+             x:Class="SaludPlus.MainPage">
 
-	<ScrollView>
-		<VerticalStackLayout Padding="30" Spacing="25">
+    <ContentPage.BindingContext>
+        <vm:MainPageModel />
+    </ContentPage.BindingContext>
 
-			<HorizontalStackLayout HorizontalOptions="End" Spacing="8" Margin="0,0,10,0">
-				<Ellipse WidthRequest="12" HeightRequest="12" VerticalOptions="Center">
-					<Ellipse.Triggers>
-						<DataTrigger TargetType="Ellipse" Binding="{Binding IsConnected}" Value="True">
-							<Setter Property="Fill" Value="#27AE60" />
-						</DataTrigger>
-						<DataTrigger TargetType="Ellipse" Binding="{Binding IsConnected}" Value="False">
-							<Setter Property="Fill" Value="#BDC3C7" />
-						</DataTrigger>
-					</Ellipse.Triggers>
-				</Ellipse>
-				<Label Text="{Binding ConnectionText}" 
-                       FontSize="12" 
-                       TextColor="#7F8C8D" 
-                       FontAttributes="Italic" 
-                       VerticalOptions="Center"/>
-			</HorizontalStackLayout>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="NeonCyan">#00F0FF</Color>
+            <Color x:Key="NeonPink">#FF0055</Color>
+            <Color x:Key="GlassPanel">#1AFFFFFF</Color>
 
-			<Label Text="MONITOR DE SALUD" 
-                   FontSize="28" 
-                   FontAttributes="Bold" 
-                   HorizontalOptions="Center" 
-                   TextColor="#2C3E50" 
-                   Margin="0,0,0,10"/>
+            <Style x:Key="CyberCard" TargetType="Border">
+                <Setter Property="StrokeShape" Value="RoundRectangle 20" />
+                <Setter Property="StrokeThickness" Value="1.5" />
+                <Setter Property="BackgroundColor" Value="{StaticResource GlassPanel}" />
+                <Setter Property="Padding" Value="20" />
+                <Setter Property="Stroke" Value="{StaticResource NeonCyan}" />
+                <Setter Property="HorizontalOptions" Value="Fill" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Shadow">
+                                        <Shadow Brush="{StaticResource NeonCyan}" Offset="0,0" Radius="10" Opacity="0.5"/>
+                                    </Setter>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-			<Border StrokeShape="RoundRectangle 20" BackgroundColor="White" Padding="20" StrokeThickness="0">
-				<HorizontalStackLayout Spacing="20">
-					<Label Text="❤️" FontSize="45"/>
-					<VerticalStackLayout>
-						<Label Text="Ritmo Cardíaco" FontSize="14" TextColor="Gray"/>
-						<Label Text="{Binding HeartRate}" FontSize="35" FontAttributes="Bold" TextColor="#E74C3C"/>
-					</VerticalStackLayout>
-				</HorizontalStackLayout>
-			</Border>
+    <Grid>
+        <Image Source="mainbackground.jpg" 
+               Aspect="AspectFill"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill"/>
 
-			<Border StrokeShape="RoundRectangle 20" BackgroundColor="White" Padding="20" StrokeThickness="0">
-				<HorizontalStackLayout Spacing="20">
-					<Label Text="🌡️" FontSize="45"/>
-					<VerticalStackLayout>
-						<Label Text="Temperatura" FontSize="14" TextColor="Gray"/>
-						<Label Text="{Binding Temperature}" FontSize="35" FontAttributes="Bold" TextColor="#3498DB"/>
-					</VerticalStackLayout>
-				</HorizontalStackLayout>
-			</Border>
+        <BoxView HorizontalOptions="Fill" VerticalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#801c1c2e" Offset="0.0" />
 
-			<Border StrokeShape="RoundRectangle 20" BackgroundColor="White" Padding="20" StrokeThickness="0">
-				<Border.Shadow>
-					<Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.1"/>
-				</Border.Shadow>
-				<HorizontalStackLayout Spacing="20">
-					<Label Text="👟" FontSize="45" VerticalOptions="Center"/>
-					<VerticalStackLayout>
-						<Label Text="Pasos Totales" FontSize="14" TextColor="#7F8C8D"/>
-						<HorizontalStackLayout Spacing="5">
-							<Label Text="{Binding StepCount}" FontSize="35" FontAttributes="Bold" TextColor="#27AE60"/>
-							<Label Text="pasos" FontSize="16" VerticalOptions="End" Margin="0,0,0,8"/>
-						</HorizontalStackLayout>
-					</VerticalStackLayout>
-				</HorizontalStackLayout>
-			</Border>
+                    <GradientStop Color="#E6000000" Offset="1.0" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
 
-		</VerticalStackLayout>
-	</ScrollView>
+        <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout 
+                Spacing="30"
+                Padding="30"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                MaximumWidthRequest="500">
+
+                <HorizontalStackLayout HorizontalOptions="End" Spacing="8" Margin="0,0,10,0">
+                    <Ellipse WidthRequest="10" HeightRequest="10" VerticalOptions="Center">
+                        <Ellipse.Triggers>
+                            <DataTrigger TargetType="Ellipse" Binding="{Binding IsConnected}" Value="True">
+                                <Setter Property="Fill" Value="#00FF00" />
+                                <Setter Property="Shadow">
+                                    <Shadow Brush="#00FF00" Radius="5" Opacity="1"/>
+                                </Setter>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Ellipse" Binding="{Binding IsConnected}" Value="False">
+                                <Setter Property="Fill" Value="#999999" />
+                            </DataTrigger>
+                        </Ellipse.Triggers>
+                    </Ellipse>
+                    <Label Text="{Binding ConnectionText}" 
+                           FontSize="12" 
+                           TextColor="#DDDDDD" 
+                           FontAttributes="Italic" 
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+                <Label Text="MONITOR DE SALUD" 
+                       FontSize="28" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center" 
+                       HorizontalTextAlignment="Center"
+                       TextColor="White"
+                       Margin="0,0,0,10">
+                    <Label.Shadow>
+                        <Shadow Brush="{StaticResource NeonCyan}" Offset="0,0" Radius="8" Opacity="0.8"/>
+                    </Label.Shadow>
+                </Label>
+
+                <Border Style="{StaticResource CyberCard}" Stroke="{StaticResource NeonPink}">
+                    <Border.Shadow>
+                        <Shadow Brush="{StaticResource NeonPink}" Offset="0,0" Radius="10" Opacity="0.4"/>
+                    </Border.Shadow>
+                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="20">
+                        <Label Grid.Column="0" Text="❤️" FontSize="40" VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                            <Label Text="RITMO CARDÍACO" FontSize="12" TextColor="{StaticResource NeonPink}" CharacterSpacing="1"/>
+                            <Label Text="{Binding HeartRate}" FontSize="40" FontAttributes="Bold" TextColor="White">
+                                <Label.Shadow>
+                                    <Shadow Brush="{StaticResource NeonPink}" Radius="5" Opacity="0.6"/>
+                                </Label.Shadow>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource CyberCard}" Stroke="{StaticResource NeonCyan}">
+                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="20">
+                        <Label Grid.Column="0" Text="🌡️" FontSize="40" VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                            <Label Text="TEMPERATURA" FontSize="12" TextColor="{StaticResource NeonCyan}" CharacterSpacing="1"/>
+                            <Label Text="{Binding Temperature}" FontSize="40" FontAttributes="Bold" TextColor="White">
+                                <Label.Shadow>
+                                    <Shadow Brush="{StaticResource NeonCyan}" Radius="5" Opacity="0.6"/>
+                                </Label.Shadow>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <Button Command="{Binding ToggleConnectionCommand}" 
+                        HeightRequest="55"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        FontSize="16"
+                        BorderWidth="1"
+                        Margin="0,20,0,0">
+
+                    <Button.Shadow>
+                        <Shadow Brush="Black" Offset="3,3" Radius="5" Opacity="0.5"/>
+                    </Button.Shadow>
+
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsConnected}" Value="True">
+                            <Setter Property="Text" Value="DESCONECTAR SISTEMA" />
+                            <Setter Property="BackgroundColor" Value="#AA2A0015" />
+                            <Setter Property="BorderColor" Value="{StaticResource NeonPink}" />
+                            <Setter Property="TextColor" Value="{StaticResource NeonPink}" />
+                        </DataTrigger>
+
+                        <DataTrigger TargetType="Button" Binding="{Binding IsConnected}" Value="False">
+                            <Setter Property="Text" Value="INICIAR ENLACE" />
+                            <Setter Property="BackgroundColor" Value="#AA002233" />
+                            <Setter Property="BorderColor" Value="{StaticResource NeonCyan}" />
+                            <Setter Property="TextColor" Value="{StaticResource NeonCyan}" />
+                        </DataTrigger>
+
+                        <DataTrigger TargetType="Button" Binding="{Binding IsConnecting}" Value="True">
+                            <Setter Property="Text" Value="ESTABLECIENDO..." />
+                            <Setter Property="BackgroundColor" Value="#AA111111" />
+                            <Setter Property="BorderColor" Value="Gray" />
+                            <Setter Property="TextColor" Value="Gray" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>
